@@ -1,0 +1,12 @@
+"Lateral"	"b"	"T"	"Sa.C"	"beta"
+"RCMF_Goul"	38.9	1.32	2.8	0.34
+"RCMF_Pit"	43.49	0.66	1.767	0.3
+"SCBF_Ak"	62.89	0.46	2.53	0.37
+"SCBF_Uriz"	45.79	0.5	2.36	0.15
+"SBRB_Uriz"	63.9	0.5	3.07	0.15
+"SBRT_Wong"	33.33	0.94	1.5	0.29
+"SMF_Lig"	23.86	1.32	1.67	0.39
+"SMF_MinW_Tehr"	25.5	0.69	2.01	0.4
+"SMF_Int_Tehr"	30.54	0.69	2.31	0.18
+"SMF_UnifE_Tehr"	43.15	0.69	3.03	0.3
+"SPSW_Purba"	47.37	0.36	3.6	0.4
