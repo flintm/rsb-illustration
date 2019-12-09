@@ -5,16 +5,22 @@ This repository contains scripts and data related to an illustration of the use 
 
 Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with XXXXX", DesignSafe-CI. DOI: XXXX
 
-# Motivation and overview
+- [Motivation and overview](##Motivation%20and%20overview)
+- [License](##License)
+
+<!-- toc -->
+
+
+## Motivation and overview
 Illustrate
 
 Mid-rise commercial buildings were selected as the case study for decision framework development. These buildings tend to be designed by integrated project teams, exhibit low regional variability, account for a significant portion of commercial building energy consumption, and are centers of economic and governmental functions. The illustration identifies an optimal SFLE system for a hypothetical four-story office building is located in Charleston, South Carolina, USA (32.7221, -79.9341). The building is on a 30x30ft grid [building plans](), with 6 bays in the longitudinal and 3 bays in the transverse direction, for a total of 64,800 square feet of floor area.  The climate is Zone 3A (Warm-Humid) and energy use is cooling-dominated. The building is exposed to high seismic hazard (S_DS=0.75g with site class B/C boundary) with a design life of 50 years.
 
-## M0: Decision framing
-### 0.1 Selection of eligible soil-foundation-lateral structure-envelope subsystems
+### M0: Decision framing
+#### 0.1 Selection of eligible soil-foundation-lateral structure-envelope subsystems
 Definition of the building and eligible SFLE subsystems uses pre-existing taxonomies.
 In the illustration, from a set of 2 soil modifications, 3 foundation subsystems, 11 lateral structural subsystems, and 32 envelope subsystems applicable to mid-rise commercial buildings from a [multi-hazard performance data repository](), the hypothetical developers were assumed to have excluded soil reinforcement and masonry or wood lateral systems. Mat foundation and a curtain wall envelope subsystems were pre-defined as the only eligible alternatives.
-### 0.2 Selection of triple-bottom-line (TBL) sustainability metrics
+#### 0.2 Selection of triple-bottom-line (TBL) sustainability metrics
 Selection of TBL decision metrics that fully describe SFLE system sustainability and resilience; framework development has included life-cycle and initial cost, initial cost, time-integrated loss of function, downtime, CO2, and operational and embodied energy.
 The illustration selected 7 metrics modeled as random variables with pre-determined probabilistic distributions.
 
@@ -26,12 +32,12 @@ The illustration selected 7 metrics modeled as random variables with pre-determi
 1. Embodied energy, normally distributed with mean and CV.
 1. Operational energy, normally distributed with mean and CV.
 
-### 0.3 Definition of performance range
+#### 0.3 Definition of performance range
 Definition of a performance range uses targeted literature review and expert elicitation to  identify the “best” and “worst” performing (yet code-compliant) systems, which must cover a wide range of hazard performance and energy efficiency.
 
 The illustration performance range definition implicitly assumed that the developer would accept a code-minimum building costing 9M USD. The lateral subsystem seismic performance is later characterized as 1.5x and 2x code minimum, whereas the envelope subsystem performance is defined over a range of window-wall ratio from 40% to 22%.
 
-### 0.4 Preference assessment and indifference curve development
+#### 0.4 Preference assessment and indifference curve development
 In the [SIMPLE-Design framework](), assessment of preferences and indifference curve development evaluates decision-maker utilities with respect to conflicting decision criteria within the performance range. After identifying a preferred alternative, the decision-maker generates equal-utility configurations, allowing regression to create an indifference curve representing bi-criteria tradeoffs. 
 
 The illustration's indifference curves and preference systems were directly generated assuming the archetypal/hypothetical values of three stakeholder groups: developer, potential owner, and potential occupant/community. While the developer desires low initial costs (maximum profit), low liability (code compliant-safety), and sustainability (future marketing potential), the owner is concerned with life-cycle costs and operational energy. The occupants/community are concerned with environmental performance [AIA2030+]() and enhanced seismic performance [REDi TM](). Constraints (building code safety regulations and initial cost) are combined with safety, cost, and energy tradeoffs. 
@@ -40,7 +46,7 @@ Ten limit state functions represented the constraints and preferences of the thr
 
 The combination of the limit states was created using a generalized system. In addition to the limit states explicit in building design codes (1 and 3) and low initial cost (4), either developer cost-energy tradeoffs (5, 6), or either owner tradeoff (7, 8) was required to be satisfied. This system results in 4 "cut sets": C = {C<sub>1</sub> = {1}, C<sub>2</sub> = {3}, C<sub>3</sub> = {4}, C<sub>4</sub> = {5,6,7,8}}.
 
-## M1: SFLE (soil-foundation-lateral structure-envelope) system generator
+### M1: SFLE (soil-foundation-lateral structure-envelope) system generator
 Given a building taxonomy, user-determined eligible SFLE subsystems, and decision constraints or preferences, M1 generates a set of feasible alternative SFLE system configurations through two divergent phases and one convergent phase: (1) SFLE subsystem combinatorial expansion to the initial option space; (2) SFLE compatibility checks to develop the reduced non-infeasible set; and (3) parameterization to cover a range of performance. Optionally, (4) preliminary performance data may be passed to M3 to identify a higher-performing set of feasible candidate systems.
 
 In the illustration, non-infeasible subsystems consistent with the decision framing (M0.1) were: S = {s<sub>1</sub> = "soil densification"}, F = {f<sub>3</sub> = "mat foundation"}, a set of 9 options for the lateral system in L, and E = {e<sub>9</sub> = "curtain wall"}.
@@ -49,13 +55,13 @@ Performance data from  [multi-hazard performance data repository]() was pulled a
 
 Only 6 of 11 lateral systems were available from the repsitory data. Of these, the M1 results indicated that the following lateral subsystems should be considered in the M2 assessment: L = {l<sub>3</sub> = "steel buckling restrained braced frame", l<sub>2</sub> = "steel concentrically braced frame", l<sub>7</sub> = "reinforced concrete moment-resisting frame (MRF)", l<sub>6</sub> = "steel MRF"}. The soil and foundation performance parameters (degree of densification and foundation depth, respectively) were limited to values of 0 (where the PP values are made dimensionless over the performance range from M0.3), whereas the lateral subsystem had variable PPs that took on values of 0, 0.5, and 1. 
 
-## M2: probabilistic life-cycle performance assessment
+### M2: probabilistic life-cycle performance assessment
 Whereas M1 generates and pares down a set of systems based on qualitative or semi-quantitative criteria, M2 evaluates each alternative system configuration in detail. The probabilistic, quantitative approach draws on many existing methods from “performance-based engineering” as it is defined in the natural hazards, energy modeling, and durability research communities. Cradle-to-gate economic, societal, and environmental impacts are characterized, followed by operational performance (i.e., energy use), maintenance, and performance during the range of possible natural hazard events. Simulations must be sufficiently detailed to capture the difference between code-minimum and higher-performing configurations of the same SFLE system.
 
 In the illustration, M2 considered only two lateral subsystems in the "special" class, l<sub>6</sub> = "reinforced concrete MRF", and l<sub>7</sub> = "steel MRF", each of which had 9 variant configurations (described subsequently). The illustration focuses on seismic performance and operational energy, with 2 SFLE alternatives x 9 lateral configurations x 3 envelope configurations = 54 candidate alternative configurations requiring life-cycle performance assessment.
 
-### Initial characterization
-#### "Base case" configurations (lateral PP value = 0; envelope PP value = 0.5)
+#### Initial characterization
+##### "Base case" configurations (lateral PP value = 0; envelope PP value = 0.5)
 The [RSMeans commercial construction square foot cost estimator]() was used to estimate the initial cost using cost ratios for Charleston, SC. Besides foundation, soil, and envelope selection, no customization was performed. This estimate included the SFLE, gravity structural subsystem, finishes, services, and AEC fees. The structure and envelope/partitions accounted for approximately 14 and 18%, respectively, of the total cost. As a percentage of SFLE, and partitions, the structural system cost was 35% for concrete and 50% for steel.
 
 | Cost (M-USD)  | Concrete MRF  | Steel MRF  |
@@ -87,7 +93,7 @@ The embodied energy (EE) associated with cradle-to-gate + maintenance was estima
 | *envelope*  | *3.87* | *3.87*  |
 
 
-#### Lateral configurations (PP values of 0.5, 1)
+##### Lateral configurations (PP values of 0.5, 1)
 Three hypothetical lateral performance parameters (PPs, as well as their combination) were identified to isolate the effects of various design decisions on seismic performance: yield strength, pre-capping plastic ductility (from yield to maximum strength), and post-capping ductility (from maximum to zero residual strength). 
 
 * Normalized yield strength (F<sub>y</sub>) relates to overstrength, assuming constant stiffness. While it is generally difficult to isolate strength and stiffness, increased performance may be achievable by increasing member dimensions or varying the steel yield strength.
@@ -113,7 +119,7 @@ Factored values of 1.5 and 2x the code-minimum parameter value were considered f
 | +0.5δ<sub>pc</sub>  | 0.03 | 0.02  | 0.46 | 0.13 |
 | +1.0δ<sub>pc</sub>  | 0.05 | 0.05  | 0.93 | 0.26 |
 
-#### Envelope configurations (PP values 0 and 1)
+##### Envelope configurations (PP values 0 and 1)
 The envelope system PP was defined as the window-to-wall ratio of the envelope system, and with code-minimum defined as 40%, high-performance as 22%, and the intermediate "base" value of 31%. The marginal cost to increase performance was estimated using the following assumptions:
 
 * Including materials and installation, the window square foot cost is ~60 USD, whereas the brick facade costs ~30 USD.
@@ -132,14 +138,14 @@ To compute changes in embodied energy, new Athena models were developed specifyi
 
 
 
-### Operational energy performance
+#### Operational energy performance
 
-### Seismic performance
+#### Seismic performance
 The seismic behavior was modeled in OpenSees as a nonlinear single-degree-of-freedom (SDOF) oscillator using response history analysis over a suite of 80 unscaled synthetic ground motions based on a geologically-consistent hazard mapping of South Carolina. The performance-based earthquake engineering (PBEE) assessment is based on that of the ["PEER framework"](), and requires hazard analysis, structural analysis, damage analysis, and loss analysis. In addition to standard uncertainty sources, the pre-defined collapse-drift limit was defined as random variable X3, such that the PBEE assessment was conducted over discretized values of the structure-specific drift distribution. Subsequent convolution of expected lifetime loss ratio (ELLR) conditional on collapse drift limit with the collapse probability distribution allows the consideration of drift limit uncertainty. A similar convolution was performed to determine the probability of collapse at MCE.
 
 The base or "code-minimum" configuration lateral configurations were obtained by fitting monotonic backbone SDOF parameters to a nonlinear static "pushover" of a representative building from the literature; the fitted backbone was uniformly scaled by the ratio of design seismic hazard of the original pushovers (in California) to the Charleston site (scale factor was 0.46).
 
-#### Hazard (intensity measure, IM)
+##### Hazard (intensity measure, IM)
 The seismic hazard curve was obtained from the [USGS Unified Hazard Tool]() and used the 2014 dynamic-conterminous (v4.1.1) mapping at B/C boundary for soil shear wave velocity. The hazard curve values for PGA, Sa(0.2s), Sa(1s), and Sa(2s) were loaded. Interpolation in log-log space was used for both Sa values at other periods and to support finer discretization of Sa and 
 mean annual frequency of exceedence values (&lambda;<sub>IM</sub>) to support later numerical convolution.
 
@@ -147,20 +153,20 @@ Additionally, a [geologically realistic probabilistic hazard mapping of South Ca
 
 The Charleston hazard maps were combined with a [ground motion simulation package](Chapman and Talwani, 2006) to develop a suite of 80 hazard-consistent synthetic ground motions (GMs). The synthetic ground motions were developed using a stochastic method, which combines the seismological description of ground motion’s amplitude spectrum from the site hazard model with an adjusted random phase spectrum. The ground motion’s spectrum comprises three components (source, path and site) and encompasses the physical process of earthquake and resultant wave propagation. The code develops ground motion time series by generating white noise for the given duration, which is windowed and transformed to the frequency domain, scaled by the ground motion spectrum, and finally transformed back to the time domain [using a standard procedure](Boore, 2003). The simulation package requires input magnitude-distance (M-R) pairs, which were obtained using an inverse transform sampling from the USGS hazard deaggregation at each level, such that the number of pairs in each bin was proportional to that bin’s contribution to the hazard. One synthetic GM was generated using for each M-R pair and associated hazard level.
 
-#### Structural response (engineering demand parameter, EDP)
+##### Structural response (engineering demand parameter, EDP)
 A least-squares regression in log-log space was performed on the OpenSees roof drift-spectral acceleration results. The regression was used to define lognormal distributions for roof drift (RD) given Sa. The distribution mean (ln of the median) was defined by ln(med(RD)) = b<sub>0</sub> + b<sub>0</sub>ln(Sa), and the dispersion &beta;<sub>RD|Sa</sub> was obtained from the regression error. As expected, PPs their values had no effect on the elastic behavior of the structures. Changes to pre-capping ductility and post-capping ductility affected drifts at large Sa values, with post-capping ductility having a larger effect. The combination of all PP s produced results with trends that could not easily be decomposed into the individual PP contributions, indicating that no individual PP is sufficient.
 
 A log-logistic distribution for collapse probability conditional on Sa was obtained using the applicable pre-defined collapse drift limit, RD<sub>C</sub>. Two concrete configurations had unacceptable collapse probabilities (>10%); three others, including the code-minimum configurations, were close to unacceptable performance (>9%). While no steel configuration was unacceptable, the steel code-minimum and one other configuration had high MCE collapse probabilities (>9%). 
 
-#### Damage of structural and non-structural components (damage states, DS)
+##### Damage of structural and non-structural components (damage states, DS)
 The EDP results were translated to global damage states using the Hazus-MH drift-related limit states for 'slight', 'moderate', 'extensive', and 'complete' damage. The resulting fragility curves indicated that the code-minimum steel structure would experience earlier onset of almost all structural damage states as compared to the concrete structure. Fragility curves were also developed for non-structural drift-sensitive components using Hazus-MH data. The collapse fragility was obtained from the log-logistic regression and assumed to be mutually exclusive to the sequential damages states DS<sub>1</sub> to  DS<sub>4</sub>. The hazard curve &lambda;<sub>IM</sub> was then convolved with the fragility curves to obtain the annual probability of being in each damage state.
 
-#### Economic loss and embodied energy (decision variables, DV)
+##### Economic loss and embodied energy (decision variables, DV)
 Structural and non-structural damage repair cost ratios ranged from 0.4 to 32.9% of the assumed initial building value; with collapse repair cost ratio was assumed 110%. The annual probability of being in each damage state was multiplied by its associated repair cost ratio and summed over non-collapse/structural, non-collapse/non-structural, and collapse contributions. The expected annual loss ratio (EALR) was computed by summing the expected annual loss ratio over the components.
 
 The expected lifetime loss ratio (ELLR) was estimated by multiplying the EALR by the input building lifetime (assumed 50 years in the illustration). This approximation is [acceptable due to the very low rate](Der) of seismic events of interest at the site.
 
-### Lifetime impact characterization
+#### Lifetime impact characterization
 Random variables/decision metrics were defined as:
 
 * X1: drift at Sa DBE (unitless); data from PBEE assessment.
@@ -182,7 +188,7 @@ Correlations between random variables in X-space (**R**<sub>**XX**</sub>) were o
 * X5-X7: using the definition of covariance and linear expression for E[X5], &rho;<sub>X5,X7</sub> = 0.0028&sigma;<sub>X7</sub>/&sigma;<sub>X5</sub>.
 * X6-X7: assumed zero (source of uncertainty in embodied energy is independent of uncertainty in operational energy).
 
-## M3: reliability-based ranking and optimization of alternative configurations using a generalized preference system
+### M3: reliability-based ranking and optimization of alternative configurations using a generalized preference system
 
 With the exception of the third limit state function, g3, all limit states are linear indifference curves with an intercept and 1 or 2 coefficients across the 7 random variables. There are 10 limit state functions.
 
@@ -193,17 +199,17 @@ M3 uses a standard implementation of the First-Order Reliability Method (FORM). 
 
 With all defaults, the top-ranked system is the code-minimum steel MRF with high-performance envelope. The code-minimum concrete MRF system with high-performance envelope is ranked 26th.
 
-# Technologies
+## Technologies
 * MATLAB R2019a with: Statistics and Machine Learning Toolbox; Curve Fitting Toolbox
 * R v3.5.2 with: jsonlite v1.6; fields v10.0; reshape2 v1.4.3; mvtnorm v1.10-11; ggplot2 v3.1.0
 * OpenSees v2.4; requires tcl???
 
-# How to use
+## How to use
 Reproduction of the illustration requires INITIAL SETUP AND THEN running the three modules. As M2 and M3 rely on OpenSees assessment as well as M0, the most practical implementation would be to (1) follow the M1 steps  using R, (2) perform the OpenSees analysis from M2, (3) follow the M0, M2, and M3 steps, all of which are chunks in a single MATLAB script. The organization that follows is theoretical, rather than as-ran.
 
 More generally, the illustration scripts may be modified to XYZ.
 
-## M0: Decision framing
+### M0: Decision framing
 Open MATLAB and navigate to the main repository folder. Ensure that the `/Data` and `Figs` folders and subfolders are added to the MATLAB path. Then:
 
 * Open `M2_M3_Main_Run_All.m`; this script is going to be run chunk-by-chunk. It is noted that time-consuming chunks will output their progress to the command line.
@@ -218,8 +224,8 @@ Supported modifications to `M2_M3_Main_Run_All.m`:
 * Additional random variables may be added, e.g., global warming potential, assuming that distributions are subsequently developed and their parameters are added.
 
 
-## M1: SFLE (soil-foundation-lateral structure-envelope) system generator
-### Steps
+### M1: SFLE (soil-foundation-lateral structure-envelope) system generator
+#### Steps
 Open R and navigate to the main repository folder. Then:
 
 * Run `M1_SFLE_Generation.R` to:
@@ -233,7 +239,7 @@ Open R and navigate to the main repository folder. Then:
 * Run `M1_StructResponse.R` to analyze lateral systems obtained from from `Data/M1_Fragility_IDA_Database.xlsx`) and subsequently hard-coded and written to `M1.lateral.systems.txt`. Drift distribution parameters, limit state failure probabilities, and the system failure probabilities are stored in `df.lat` and saved to `M1.lateral.systems.ranked.txt`.
 
 
-### Supported modifications:
+#### Supported modifications:
 
 * `M1_SFLE_Generation.R`: 
 	* additional subsystems may be added to `S`, `F`, `L`, or `E`.
@@ -247,11 +253,11 @@ Open R and navigate to the main repository folder. Then:
 	* Change the limit state functions `g1` and `g2` (or add additional functions).
 	* Change the preference system formulation or correlation assumed between limit states.
 
-## M2: probabilistic life-cycle performance assessment (earthquake focus)
-### Cloud-based seismic analysis using OpenSees and nonlinear single-degree-of-freedom oscillator
+### M2: probabilistic life-cycle performance assessment (earthquake focus)
+#### Cloud-based seismic analysis using OpenSees and nonlinear single-degree-of-freedom oscillator
 Install OpenSees and XXXXX.
 
-### Performance assessment
+#### Performance assessment
 After following all steps listed for M0 above, perform the following in `M2_M3_Main_Run_All.m`:
 
 * Run **Chunk 1** to create hard-coded parameters for the analysis, such as the names of the systems analyzed `'conc'` and `'steel'`, initial cost and embodied energy impacts `c_init` and `e_init`, analysis lifetime `Years`, expected lifetime maintenance ratio `ELMR`, marginal cost coefficients for configurations with the beyond-code performance parameters for lateral and envelope subsystems `c_PP_l` and `c_PP_e`, and correlations between drifts (from additional OpenSees analyses), `r_x1_x2`.
@@ -281,7 +287,7 @@ Supported modifications to `M2_M3_Main_Run_All.m`:
 
 
 
-## M3: reliability-based ranking and optimization of alternative configurations using a generalized preference system
+### M3: reliability-based ranking and optimization of alternative configurations using a generalized preference system
 After following all steps listed for M2 above, perform the following in `M2_M3_Main_Run_All.m`:
 
 * Run **Chunk 8** to analyze the candidate alternative configurations across all limit state functions. 
@@ -315,9 +321,9 @@ Supported modifications:
 * The cut sets may be modified but additional modification will be required in Chunk 10 if there are more than 4 cut sets.
 * Change the examples used to create results tables in **Chunk 13**.
 
-# Repository Contents
+## Repository Contents
 Scripts are named according to their module of application, M1, M2, or M3. Data (both input and output) is in the `/Data` folder, whereas plots are created in the `/Figs/figs` or `/Figs/eps` folders. The OpenSees structural analysis scripts are in the `/OpenSees` folder, with synthetic ground motions for Charleston in `/OpenSees/GMfiles`.
-## Scripts
+### Scripts
 * `M1_Hazard_Interp.R`
 * `M1_SFLE_Generation.R`
 * `M1_Struct_Response.R`
@@ -331,7 +337,7 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 * `M3_Plot_Hyperpolygon.m`
 * `M3_Plot_pF_bar.R`
 
-## Data
+### Data
 * `Charleston.BCboundary.2014DynamicCoterm.json`
 * `EDP_conc.mat`
 * `EDP_steel.mat`
@@ -343,7 +349,7 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 * `drift_distributions.mat`
 * `hazardInfo.mat`
 
-## OpenSees
+### OpenSees
 * `Analysis_Engine.tcl`                                  
 * `Main_Run.tcl`
 * `Nonlin_Spring.tcl `
@@ -352,7 +358,7 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 * `Time_History.tcl `
 * `/GMfiles/1.dat...80.dat`
 
-# Credits and Sources
+## Credits and Sources
 * M1: [Haseeb Tahir, MS Thesis (2016), Virginia Tech](http://hdl.handle.net/10919/71794)
 * M1: DesignSafe repository for Tahir
 * M1/M2: [USGS Unified Hazard Tool](https://earthquake.usgs.gov/hazards/interactive/)
@@ -361,7 +367,7 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 * M3: [Engineering Design Reliability Handbook](http://dx.doi.org/10.1201/9780203483930) Ch. 14 on FORM (Der Kiureghian) and Ch. 15 on systems (Thoft-Christensen)
 
 
-# License
+## License
 * Scripts are licensed under [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
 * Data under [ODC-By](https://opendatacommons.org/licenses/by/1-0/index.html).
 * Other copyrightable material under [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/).
