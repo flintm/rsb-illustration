@@ -5,17 +5,25 @@ This repository contains scripts and data related to an illustration of the use 
 
 Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with XXXXX", DesignSafe-CI. DOI: XXXX
 
-- [Motivation and overview](##Motivation%20and%20overview)
-- [License](##License)
+- [Motivation and Overview](#Motivation%20and%20overview)
+- [Technologies](#Technologies)
+- [Illustration Details](Illustration%20Details)
+- [How to Use](#How%20to%20Use)
+- [Credits and Sources](#Credits%20and%20Sources)
+- [License](#License) 
+- [License2](https://github.com/flintm/rsb-illustration#license)
+
 
 <!-- toc -->
 
 
-## Motivation and overview
+## Motivation and Overview
 Illustrate
 
-Mid-rise commercial buildings were selected as the case study for decision framework development. These buildings tend to be designed by integrated project teams, exhibit low regional variability, account for a significant portion of commercial building energy consumption, and are centers of economic and governmental functions. The illustration identifies an optimal SFLE system for a hypothetical four-story office building is located in Charleston, South Carolina, USA (32.7221, -79.9341). The building is on a 30x30ft grid [building plans](), with 6 bays in the longitudinal and 3 bays in the transverse direction, for a total of 64,800 square feet of floor area.  The climate is Zone 3A (Warm-Humid) and energy use is cooling-dominated. The building is exposed to high seismic hazard (S_DS=0.75g with site class B/C boundary) with a design life of 50 years.
 
+
+## Illustration Details
+Mid-rise commercial buildings were selected as the case study for decision framework development. These buildings tend to be designed by integrated project teams, exhibit low regional variability, account for a significant portion of commercial building energy consumption, and are centers of economic and governmental functions. The illustration identifies an optimal SFLE system for a hypothetical four-story office building is located in Charleston, South Carolina, USA (32.7221, -79.9341). The building is on a 30x30ft grid [building plans](), with 6 bays in the longitudinal and 3 bays in the transverse direction, for a total of 64,800 square feet of floor area.  The climate is Zone 3A (Warm-Humid) and energy use is cooling-dominated. The building is exposed to high seismic hazard (S_DS=0.75g with site class B/C boundary) with a design life of 50 years.
 ### M0: Decision framing
 #### 0.1 Selection of eligible soil-foundation-lateral structure-envelope subsystems
 Definition of the building and eligible SFLE subsystems uses pre-existing taxonomies.
@@ -204,7 +212,7 @@ With all defaults, the top-ranked system is the code-minimum steel MRF with high
 * R v3.5.2 with: jsonlite v1.6; fields v10.0; reshape2 v1.4.3; mvtnorm v1.10-11; ggplot2 v3.1.0
 * OpenSees v2.4; requires tcl???
 
-## How to use
+## How to Use
 Reproduction of the illustration requires INITIAL SETUP AND THEN running the three modules. As M2 and M3 rely on OpenSees assessment as well as M0, the most practical implementation would be to (1) follow the M1 steps  using R, (2) perform the OpenSees analysis from M2, (3) follow the M0, M2, and M3 steps, all of which are chunks in a single MATLAB script. The organization that follows is theoretical, rather than as-ran.
 
 More generally, the illustration scripts may be modified to XYZ.
@@ -321,7 +329,7 @@ Supported modifications:
 * The cut sets may be modified but additional modification will be required in Chunk 10 if there are more than 4 cut sets.
 * Change the examples used to create results tables in **Chunk 13**.
 
-## Repository Contents
+##Repository Contents
 Scripts are named according to their module of application, M1, M2, or M3. Data (both input and output) is in the `/Data` folder, whereas plots are created in the `/Figs/figs` or `/Figs/eps` folders. The OpenSees structural analysis scripts are in the `/OpenSees` folder, with synthetic ground motions for Charleston in `/OpenSees/GMfiles`.
 ### Scripts
 * `M1_Hazard_Interp.R`
