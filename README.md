@@ -28,7 +28,7 @@ Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scr
 ## Motivation and Overview
 Achieving holistic resilient and sustainable building design requires that hazards be considered in the context of the full building life-cycle. Current design methods adequately address individual issues related to resilient and sustainable building design but cannot account for the complexities and interconnectedness of hazards and operation. A proposed decision framework integrates previous research in performance-based assessment to identify optimal building **S**oil, **F**oundation, **L**ateral structural, and **E**nvelope (SFLE) systems during early design. 
 
-![VT-RSB Decision Framework](https://github.com/flintm/rsb-illustration/Figs/RSB_Framework.png "RSB Decision Framework overlaid on standard Decision Analysis cycle")
+![VT-RSB Decision Framework](https://github.com/flintm/rsb-illustration/raw/master/Figs/RSB_Framework.png "RSB Decision Framework overlaid on standard Decision Analysis cycle")
 
 Three modules assess resilience and sustainability over a broad set of SFLE systems: 
 
@@ -42,15 +42,17 @@ These modules are envisioned generically and can be adapted for different buildi
 ## Illustration Details
 Mid-rise commercial buildings were selected as the case study for decision framework development. These buildings tend to be designed by integrated project teams, exhibit low regional variability, account for a significant portion of commercial building energy consumption, and are centers of economic and governmental functions. The illustration identifies an optimal SFLE system for a hypothetical four-story office building is located in Charleston, South Carolina, USA (32.7221, -79.9341). The building is on a 30x30ft grid, with 6 bays in the longitudinal and 3 bays in the transverse direction, for a total of 64,800 square feet of floor area.  The climate is Zone 3A (Warm-Humid) and energy use is cooling-dominated. The building is exposed to high seismic hazard (S<sub>DS</sub> = 0.75g with site class B/C boundary) with a design life of 50 years.
 
-![RSB illustration building plan](https://github.com/flintm/rsb-illustration/Figs/Building_Plans.png "Elevation and Plan view of VT-RSB Archetype")
+![RSB illustration building plan](https://github.com/flintm/rsb-illustration/raw/master/Figs/Building_Plans.png "Elevation and Plan view of VT-RSB Archetype")
 
 ### M0: Decision framing
 
 #### 0.1 Selection of eligible soil-foundation-lateral structure-envelope subsystems
 Definition of the building and eligible SFLE subsystems uses pre-existing taxonomies.
+
 In the illustration, from a set of 2 soil modifications, 3 foundation subsystems, 11 lateral structural subsystems, and 32 envelope subsystems applicable to mid-rise commercial buildings from a [multi-hazard performance data repository](), the hypothetical developers were assumed to have excluded soil reinforcement and masonry or wood lateral systems. Mat foundation and a curtain wall envelope subsystems were pre-defined as the only eligible alternatives.
 #### 0.2 Selection of triple-bottom-line (TBL) sustainability metrics
 Selection of TBL decision metrics that fully describe SFLE system sustainability and resilience; framework development has included life-cycle and initial cost, initial cost, time-integrated loss of function, downtime, CO2, and operational and embodied energy.
+
 The illustration selected 7 metrics modeled as random variables with pre-determined probabilistic distributions.
 
 1. Drift at the Design Basis Event (DBE) earthquake spectral acceleration at the structure's first mode period (Sa), lognormally distributed with ln(median) and dispersion.
@@ -160,9 +162,9 @@ The envelope system PP was defined as the window-to-wall ratio of the envelope s
 To compute changes in embodied energy, new Athena models were developed specifying window:wall ratios of 0.40 and 0.22.
 
 |    | +Cost (M-USD)   | +Embodied Energy (TJ)  |
-| ------------- | ------------- | ------------- | |
+| ------------- | ------------- | ------------- |
 | w:w: 40%  |  0.05 | -0.14 |
-| *w:w 31%*  |  *--* |  *--* | --
+| *w:w 31%*  |  *--* |  *--* |
 | w:w: 22%  |  -0.05 | 0.14 | 
 
 
