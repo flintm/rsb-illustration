@@ -233,7 +233,7 @@ The top-ranked system was the code-minimum steel MRF with high-performance envel
 ## Technologies
 * MATLAB R2019a with: Statistics and Machine Learning Toolbox; Curve Fitting Toolbox
 * R v3.5.2 with: jsonlite v1.6; fields v10.0; reshape2 v1.4.3; mvtnorm v1.10-11; ggplot2 v3.1.0
-* OpenSees v2.4; requires tcl???
+* [OpenSees](https://opensees.berkeley.edu/OpenSees/user/download.php) v2.4.5; [TCL/TK](https://www.tcl.tk/software/tcltk/8.5.tml) 8.5
 
 ## How to Use
 Reproduction of the illustration requires performing the initial decision framing (M0), and then running the three modules. As M2 and M3 rely on OpenSees assessment as well as M0, the most practical implementation would be to (1) follow the M1 steps in R, (2) perform the OpenSees analysis from M2, (3) follow the M0, M2, and M3 steps, all of which are chunks in a single MATLAB script. The organization that follows is theoretical, rather than as-ran.
@@ -274,7 +274,7 @@ Open R and navigate to the main repository folder. Then:
 * Run `M1_StructResponse.R` to analyze lateral systems obtained from from `Data/M1_Fragility_IDA_Database.xlsx`) and subsequently hard-coded and written to `M1.lateral.systems.txt`. Drift distribution parameters, limit state failure probabilities, and the system failure probabilities are stored in `df.lat` and saved to `M1.lateral.systems.ranked.txt`.
 
 
-#### Supported modifications:
+#### Supported modifications
 
 * `M1_SFLE_Generation.R`: 
 	* additional subsystems may be added to `S`, `F`, `L`, or `E`.
@@ -291,7 +291,25 @@ Open R and navigate to the main repository folder. Then:
 ### M2: probabilistic life-cycle performance assessment (earthquake focus)
 
 #### Cloud-based seismic analysis using OpenSees and nonlinear single-degree-of-freedom oscillator
-Install OpenSees and XXXXX.
+The oscillator uses a hysteretic behavior defined using the Ibarra-Medina-Krawinkler backbone curve. 
+
+
+##### Steps
+Follow the instructions at https://opensees.berkeley.edu/ to download and install OpenSees (alternately, use in the cloud at https://www.designsafe-ci.org. Download and install TCL/TK to run the scripts used to set up the OpenSees analysis. Navigate to the folder containing `Main_Run.tcl`.
+* Open `Main_Run.tcl` and modify line 13 to set the `structure` variable as `"Steel"` or `"Concrete"`.
+* Source `Main_Run.tcl` to set the monotonic backbone parameters in `Dy_list`, `dc_list`, `du_list`, `Fy_list`, and `Fc_list`. Next, `Main_Run.tcl` will in turn source `Time_History.tcl` to perform the response history analysis of the SDOF system. `Time_History.tcl`:
+	1. Reads ground  motions from `/GMfiles` based on `GM_list.tcl`.
+	1. Sources `Nonlin_spring.tcl` to creates the nonlinear spring (zero-length element in OpenSees) with the Ibarra-Medina Krawinkler behavior (Clough material in OpenSees) using parameters defined by the user in the `Main_Run.tcl`.
+	1. Sources `Analysis_Engine.tcl` to set up the analysis engine by defining required OpenSees and model parameters such as integrator type, analysis test rules, and algorithm.	
+	1. Saves the results in `GMresults`, where the maximum value of drift response is recorded in `nonlinSDOF_disp.out`
+* Import `nonlinSDOF_disp.out` into MATLAB and save .mat files consistent with the names provided in `M2_M3_Main_Run_All.m`. 
+
+##### Supported modifications
+
+* *SDOFs with different backbone curve parameters*: If the user requires to run the code for different SDOFs, the values in `Dy_list`, `dc_list`, `du_list`, `Fy_list`, `Fc_list` could be changed to match users' input. It should be noted that the displacement and force values should be normalized by building height and weight, respectively to minimize changes to the original code. In case users are only considering one single SDOF, lines 22 to 49 can be removed (except for damping ratio value as defined by `dampRatio` variable ), and the values of the aforementioned parameters can be directly assigned in lines 58 to 62 and limiting the for loop count to only one iteration at line 57.
+* *SDOFs with different backbone curve shape*: The Clough material is used in OpenSees to simulate a trilinear backbone curve shape that drops to zero at ultimate displacement. However, other types of nonlinear behavior such as bilinear can be incorporated by changing lines 22-26 in `Nonlin_Spring.tcl`. 
+* *Different GM set*: The code is developed to be versatile enough for new GM sets. The user only needs to provide the GM records in the `GMfiles` folder and changes the `Record_List.tcl` file. The `Record_List.tcl` includes two columns of data: the first column is the name of the GM records included in `GMfiles` and the second column provides the scale factors. Care should be given that synthetic GM records used in the paper were provided as single column dat files. Therefore, if a different format of GM records is used (such as the one provided in the PEER NGA dataset), users need to prepare a procedure to format the data as a single column of ground motion acceleration.
+
 
 #### Performance assessment
 
@@ -321,7 +339,7 @@ After following all steps listed for M0 above, perform the following in `M2_M3_M
 * Alter assumptions for initial impacts (`c_init`, `e_init`) or marginal cost to improve performance (`c_PP_l`, `e_PP_l`, `c_PP_e`, `e_PP_e`), or building lifetime `Years`.
 * Change the assumed distribution functional forms for the random variables in `pds` and `paramNames`.
 * Change the discretization `numFac` or parameters `mu_RD_c` and `sigma_RD_c` associated with collapse drift limits (changing the fit type would occur in `M2_Sensitivity_Collapse_Limit.m`).
-* Add new building configurations to `strucs`, i.e., `'BRB'` could be added as a third lateral structural system if all subsequent laterally-related variables are updated (e.g., `c_init` and `r_x1_x2` would get a third column),  and OpenSees data `Sa_BRB.mat` and `EDP_BRB.mat` are added to `/Data` and `M2_PBEE_Simple.m` is updated accordingly.
+* Add new building configurations to `strucs`, i.e., `'BRB'` could be added as a third lateral structural system if all subsequent laterally-related variables are updated (e.g., `c_init` and `r_x1_x2` would get a third column),  and OpenSees data `Sa_BRB.mat` and `EDP_BRB.mat` are added to `/Data` and `M2_M3_Main_Run_All` and `M2_PBEE_Simple.m` are updated accordingly.
 
 
 ### M3: reliability-based ranking and optimization of alternative configurations using a generalized preference system
