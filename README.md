@@ -1,9 +1,9 @@
 # README for scripts and data associated with illustration of decision framework for resilient, sustainable buildings
-2019-12-09, created by Madeleine Flint as part of the VT-RSB project, funded by NSF CMMI #1455466.
+2019-12-09, created by Madeleine Flint as part of the VT-RSB project, funded by NSF CMMI #1455466. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
 This repository contains scripts and data related to an illustration of the use of a modular decision framework to support early design of a hypothetical mid-rise office building located in Charleston, SC. The scripts and data can be used to reproduce data and plots associated with a companion journal manuscript "A decision framework for early design of multi-hazard resilient sustainable buildings," submitted to Engineering Structures on Dec. 2, 2019. It is noted that some text included in this README is derived from an early manuscript draft. This repository should be cited as:
 
-Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with illlustration of decision framework for resilient, sustainable buildings", DesignSafe-CI. DOI: XXXX
+Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with illlustration of decision framework for resilient, sustainable buildings", DesignSafe-CI.
 
 ## Table of Contents
 - [Motivation and Overview](#motivation-and-overview)
