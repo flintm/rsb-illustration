@@ -429,7 +429,7 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 
 ## Credits and Sources
 * M1: [Haseeb Tahir, MS Thesis (2016), Virginia Tech](http://hdl.handle.net/10919/71794)
-* M1: DesignSafe repository for Tahir
+* M1:[Seismic, Hurricane, and Tsunami Vulnerability Database and Pinch-Point Taxonomy for Mid-Rise Commercial Buildings Repository](https://doi.org/10.17603/ds2-09nn-ze82)
 * M1/M2: [USGS Unified Hazard Tool](https://earthquake.usgs.gov/hazards/interactive/)
 * M2: [Charleston, SC hazard and GM package](http://www.magma.geos.vt.edu/vtso/anonftp/scdot/report-FWHA-SC-06-09.pdf)
 * M2: special moment-resisting frames from Blume Center Technical Reports: concrete from [Haselton and Deierlein (2007)](http://purl.stanford.edu/ny266sf1883); steel from [Lignos and Krawinkler (2012)](http://purl.stanford.edu/yg701cw5473)

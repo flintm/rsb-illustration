@@ -1,4 +1,5 @@
-%this script trasnform a pushover curve to a trilinear SDOF backbone
+% Transforms a pushover curve to a trilinear SDOF backbone
+% written by Mohsen Zaker-Esteghamati
 clear
 clc
 pushdata=csvread('4story_steel.csv');
@@ -18,7 +19,7 @@ yArea=interp1(pushdata(:,1),pushdata(:,2),xArea);
 PushArea=trapz(xArea,yArea);
 %% 
 
-%to get the linear part slop
+%to get the linear part slope
 k=(2*pi/1.32)^2;
 Fy=max(pushdata(:,2));
 

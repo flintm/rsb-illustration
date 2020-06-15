@@ -1,4 +1,5 @@
-%this script trasnform a pushover curve to a trilinear SDOF backbone
+% Transforms a pushover curve to a trilinear SDOF backbone
+% written by Mohsen Zaker-Esteghamati
 clear
 clc
 pushdata=csvread('4story_concrete.csv');
