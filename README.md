@@ -245,9 +245,9 @@ More generally, the illustration scripts may be modified to change assumptions r
 ### M0: Decision framing
 
 #### Steps
-Open MATLAB and navigate to the main repository folder. Ensure that the `/Data` and `Figs` folders and subfolders are added to the MATLAB path. Then:
+Open MATLAB and navigate to the main repository folder. Ensure that the `/Data` and `/Figs` folders and subfolders are added to the MATLAB path. Then:
 
-* Open `M2_M3_Main_Run_All.m`; this script is going to be run chunk-by-chunk. It is noted that time-consuming chunks will output their progress to the command line.
+* Open `M2_M3_Main_Run_All.m`; this script is going to be run chunk-by-chunk. Time-consuming chunks will output their progress to the command line.
 * Change `SAVE_FIG` to `true` if you would like MATLAB-format .fig files to be saved by the plotting functions. 
 * Run **Chunks 2** and **3 **to create empty variables for error encoding and to set plotting controls (e.g., colors used for lateral PP configurations,`colors` ).
 * Run **Chunk 4** to define the cell `g`of individual limit state functions using a coefficient matrix, `a`, and create the cell of gradients &nabla;<sub>**X**</sub>**g**:= `grad_g`.
@@ -273,7 +273,7 @@ Open R and navigate to the main repository folder. Then:
 	1. Load the USGS-produced json file `haz.File` (defaults to`Charleston.BCboundary.2014DynamicConterm.json`) for the seismic hazard curve.
 	2. Interpolate the hazard curve at periods of interest in the M1 assessment as defined by `M1.lateral.systems.RData` and save the interpolated curve to `[haz.File].interp.txt`.
 	3. Plot the original USGS points and interpolated surface.
-* Run `M1_StructResponse.R` to analyze lateral systems obtained from from `Data/M1_Fragility_IDA_Database.xlsx`) and subsequently hard-coded and written to `M1.lateral.systems.txt`. Drift distribution parameters, limit state failure probabilities, and the system failure probabilities are stored in `df.lat` and saved to `M1.lateral.systems.ranked.txt`.
+* Run `M1_StructResponse.R` to analyze lateral systems obtained from `Data/M1_Fragility_IDA_Database.xlsx`) and subsequently hard-coded and written to `M1.lateral.systems.txt`. Drift distribution parameters, limit state failure probabilities, and the system failure probabilities are stored in `df.lat` and saved to `M1.lateral.systems.ranked.txt`.
 
 
 #### Supported modifications
@@ -283,10 +283,10 @@ Open R and navigate to the main repository folder. Then:
 	* a different discretization may be used for &theta;:=`theta`.
 	* a new category of subsystem may be added, e.g., gravity structural or mechanical, with minor adjustments to the code to ensure that `A` contains all values of interest.
 * `M1_hazard_interp.R`:
-	* The a different file `haz.File` in the standard USGS .json format may be provided to perform the M1 assessment at at a different site.
+	* A different file `haz.File` in the standard USGS .json format may be provided to perform the M1 assessment at at a different site.
 	* Different spectral acceleration periods may be analyzed by altering the `T` column in tab-delimited file `M1.lateral.systems.txt`.
 * `M1_Struct_Response.R`:
-	* Modify `df.lat` to analyze different data (hard-coded; or the code could be modified to load written data).
+	* Modify `df.lat` to analyze different data (hard-coded; or the code could be modified to load local data).
 	* Change the limit state functions `g1` and `g2` (or add additional functions).
 	* Change the preference system formulation or correlation assumed between limit states.
 
@@ -326,7 +326,7 @@ After following all steps listed for M0 above, perform the following in `M2_M3_M
 	1. Uses MATLAB's `cftool` package to fit a two-peak Gaussian model to the discretized probability of collapse at Sa MCE given collapse drift; the fit objects are stored in cell `P_c_fit`.
 	1. Analyses the correlation between X2 and X3 based on `COMPUTE_CORR`:
 		* `disc`: uses the discretization of RD<sub>C</sub> and computes the Pearson correlation coefficient between RD<sub>C</sub> and &int;P(C|RD<sub>C</sub>)dF<sub>RD_C</sub>. This approach is stable but indirect, as observations of X2 are not used.
-		* `MC`: uses 1-million Monte Carlo simulations for each alternative configuration, computing the percentage of drift observations from `f_RD_Sa_MCE` causing collapse and values  and then obtaining the correlation between that value (`P_c_k`) and the observations of collapse drift limit. This approach tends to produce `NaN` results. The user must also set the value of `COMPUTE_CORR_MC` in `M2_Sensitivity_Collapse_Limit.m` to `true`.
+		* `MC`: uses 1-million Monte Carlo simulations for each alternative configuration, computing the percentage of drift observations from `f_RD_Sa_MCE` causing collapse and values  and then obtaining the correlation between that value (`P_c_k`) and the observations of collapse drift limit. This approach tends to produce `NaN` results. The user must also set the value of `COMPUTE_CORR_MC` in `M2_Sensitivity_Collapse_Limit.m` to `true` to repeat the analysis.
 		* `load`: loads the rounded values from `drift_collapse_corr.mat`, i.e., `r_x1_x3` (assumed = 0) and `r_x2_x3`. 
 	1. Creates plots of the two-peak Gaussian fit, correlations, and ELLR.
 * Run **Chunk 7** to create probability distributions for all alternative configurations across random variables `fX` using a combination of data and distribution types hard-coded in **Chunk 1** (e.g., `CV`, `pds`), and results from Chunks 5 (e.g., `f_RD_Sa_DBE`) and 6 (e.g., `ELLR_c`). The implementation required a few error-reducing procedures:
