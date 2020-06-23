@@ -1,9 +1,11 @@
-# README for scripts and data associated with illustration of decision framework for resilient, sustainable buildings
+# README for scripts and data associated with illustration of decision framework for multi-hazard resilient, sustainable buildings
 2019-12-09, created by Madeleine Flint as part of the VT-RSB project, funded by NSF CMMI #1455466. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation.
 
 This repository contains scripts and data related to an illustration of the use of a modular decision framework to support early design of a hypothetical mid-rise office building located in Charleston, SC. The scripts and data can be used to reproduce data and plots associated with a companion journal manuscript "A decision framework for early design of multi-hazard resilient sustainable buildings," submitted to Engineering Structures on Dec. 2, 2019. It is noted that some text included in this README is derived from an early manuscript draft. This repository should be cited as:
 
-Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with illlustration of decision framework for resilient, sustainable buildings", DesignSafe-CI.
+Flint, Madeleine M, Mohsen Zaker Esteghamati, and Yasaman Shahtaheri (2019) "Scripts and data associated with illlustration of decision framework for multi-hazard resilient, sustainable buildings", DesignSafe-CI.
+
+A DOI will be provided by the NHERI Design Safe CyberInfrastructure upon publication.
 
 ## Table of Contents
 - [Motivation and Overview](#motivation-and-overview)
@@ -318,18 +320,18 @@ After following all steps listed for M0 above, perform the following in `M2_M3_M
 
 * Run **Chunk 1** to create hard-coded parameters for the analysis, such as the names of the systems analyzed `'conc'` and `'steel'`, initial cost and embodied energy impacts `c_init` and `e_init`, analysis lifetime `Years`, expected lifetime maintenance ratio `ELMR`, marginal cost coefficients for configurations with the beyond-code performance parameters for lateral and envelope subsystems `c_PP_l` and `c_PP_e`, and correlations between drifts (from additional OpenSees analyses), `r_x1_x2`.
 * Run **Chunk 5** to loop over structure types and perform M2's performance-based earthquake engineering assessment using the OpenSees nonlinear response history analysis results for the structure of interest  and the subfunction `M2_PBEE_Simple.m`. Intermediate (e.g., fragility curves `fragSs`, conditional losses `EAL_C`) and final results are returned. _Note: this run does NOT include uncertainty in collapse drift limit, rather it is used to compute the drift distributions and to obtain intermediate data such as fragilities and disaggregated losses._
-* Run **Chunk 6** to run or load data from sensitivity assessment of collapse probability and loss to collapse drift limit uncertainty. The subfunction `M1_Sensitivity_Collapse_Limit.m` has a long runtime, which is why loading the stored .mat files is advised. The subfunction:
+* Run **Chunk 6** to run or load data from sensitivity assessment of collapse probability and loss to collapse drift limit uncertainty. The subfunction `M2_Sensitivity_Collapse_Limit.m` has a long runtime, which is why loading the stored .mat files is advised. The subfunction:
 	1. 	 Discretizes the collapse drift limit, using parameters `mu_RD_c` and `sigma_RD_c` defined in **Chunk 1** (`numFac` controls the number of discretizations and defaults to 50 values).
 	1. Performs the PBEE assessment at each discretization of collapse drift limit using `M2_PBEE_Simple.m` and convolves the result for ELLR `ELLR_c` and probability of collapse at Sa MCE `P_c`.
 	1. Uses MATLAB's `cftool` package to fit a two-peak Gaussian model to the discretized probability of collapse at Sa MCE given collapse drift; the fit objects are stored in cell `P_c_fit`.
 	1. Analyses the correlation between X2 and X3 based on `COMPUTE_CORR`:
 		* `disc`: uses the discretization of RD<sub>C</sub> and computes the Pearson correlation coefficient between RD<sub>C</sub> and &int;P(C|RD<sub>C</sub>)dF<sub>RD_C</sub>. This approach is stable but indirect, as observations of X2 are not used.
-		* `MC`: uses 1-million Monte Carlo simulations for each alternative configuration, computing the percentage of drift observations from `f_RD_Sa_MCE` causing collapse and values  and then obtaining the correlation between that value (`P_c_k`) and the observations of collapse drift limit. This approach tends to produce `NaN` results.
+		* `MC`: uses 1-million Monte Carlo simulations for each alternative configuration, computing the percentage of drift observations from `f_RD_Sa_MCE` causing collapse and values  and then obtaining the correlation between that value (`P_c_k`) and the observations of collapse drift limit. This approach tends to produce `NaN` results. The user must also set the value of `COMPUTE_CORR_MC` in `M2_Sensitivity_Collapse_Limit.m` to `true`.
 		* `load`: loads the rounded values from `drift_collapse_corr.mat`, i.e., `r_x1_x3` (assumed = 0) and `r_x2_x3`. 
 	1. Creates plots of the two-peak Gaussian fit, correlations, and ELLR.
 * Run **Chunk 7** to create probability distributions for all alternative configurations across random variables `fX` using a combination of data and distribution types hard-coded in **Chunk 1** (e.g., `CV`, `pds`), and results from Chunks 5 (e.g., `f_RD_Sa_DBE`) and 6 (e.g., `ELLR_c`). The implementation required a few error-reducing procedures:
 	
-	1. A numerical adjustment is applied when the correlation matrix `Rzz` is not positive-definite (is rank-deficient). An eigenvalue analysis identifies the non-positive eigenvalue and a small number is applied to correlations with non-zero values in the associated eigenvector to reduce the correlation. I.e., if the eigenvalue analysis produced value &lambda; <sub>1</sub> = -0.2 and vector **x**<sub>1</sub> = [-0.5, 0.7, 0.5, 0, 0, 0, 0], then the correlations between Z<sub>1</sub>, Z<sub>2</sub>, and Z<sub>3</sub> would be adjusted. E.g., *&rho;*<sub>Z1,Z2</sub> = 0.9 - &epsilon;, *&rho;*<sub>Z1,Z3</sub> = 0 + 0, *&rho;*<sub>Z2,Z3</sub> = -0.7 + &epsilon;, where &epsilon; = 0.001 and is defined in Chunk 2 as `R_adj`. This numerical adjustment is repeated until `Rzz` became positive definite, up to a limit set in Chunk 2, and a record of the configurations requiring adjustment is created in `record_Rzz_err`
+	1. A numerical adjustment is applied when the correlation matrix `Rzz` is not positive-definite (is rank-deficient). An eigenvalue analysis identifies the non-positive eigenvalue and a small adjustment is applied to correlations with non-zero values in the associated eigenvector to reduce the correlation. I.e., if the eigenvalue analysis produced value &lambda; <sub>1</sub> = -0.2 and vector **x**<sub>1</sub> = [-0.5, 0.7, 0.5, 0, 0, 0, 0], then the correlations between Z<sub>1</sub>, Z<sub>2</sub>, and Z<sub>3</sub> would be adjusted. E.g., *&rho;*<sub>Z1,Z2</sub> = 0.9 - &epsilon;, *&rho;*<sub>Z1,Z3</sub> = 0 + 0, *&rho;*<sub>Z2,Z3</sub> = -0.7 + &epsilon;, where &epsilon; = 0.001 and is defined in Chunk 2 as `R_adj`. This numerical adjustment is repeated until `Rzz` became positive definite, up to a limit set in Chunk 2, and a record of the configurations requiring adjustment is created in `record_Rzz_err`.
 	1. From trial and error, the initial guess `x0` used in M3's application of FORM is hard-coded for problematic configurations to support convergence; similarly, the step size control used in the improved-Hasofer-Lind-Rackwitz-Feissler algorithm `lambda` is set to an appropriate value.
 * Run **Chunks 16, 17, 18**, and **19** to create plots.
 
@@ -414,7 +416,8 @@ Scripts are named according to their module of application, M1, M2, or M3. Data 
 * `M1_Fragility_IDA_Database.xlsx`
 * `Sa_conc.mat`
 * `Sa_steel.mat`
-* `drift_collapse_corr.mat`
+* `drift_collapse_corr_disc.mat`
+* * `drift_collapse_corr_MC.mat`
 * `drift_distributions.mat`
 * `hazardInfo.mat`
 

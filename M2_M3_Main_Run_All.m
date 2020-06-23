@@ -20,24 +20,24 @@ numStruct = size(strucs,2);
 T1 = [1.16; % period of concrete structure
       1.32]; % period of steel structure
 backbone_SF = [0.46; 0.46]; 
-mu_RD_c   = 1.5*[0.0370; 0.0471]; % multiple of Hazus high-code 'complete'
-sigma_RD_c = [0.1; 0.1]; % dispersion
-Sa_DBE    = backbone_SF.*[0.742; 0.656]; % Sa_DBE original from USGS
-Sa_MCE    = backbone_SF.*[0.984; 1.113];  % Sa_MCE original from USGS
-numFac    = 50;
-RD_c_fac  = 0.5:(1/(numFac-1)):1.5; % for collapse uncertainty
-numFac    = size(RD_c_fac,2);
+mu_RD_c     = 1.5*[0.0370; 0.0471]; % multiple of Hazus high-code 'complete'
+sigma_RD_c  = [0.1; 0.1]; % dispersion
+Sa_DBE      = backbone_SF.*[0.742; 0.656]; % Sa_DBE original from USGS
+Sa_MCE      = backbone_SF.*[0.984; 1.113];  % Sa_MCE original from USGS
+numFac      = 50;
+RD_c_fac    = 0.5:(1/(numFac-1)):1.5; % for collapse uncertainty
+numFac      = size(RD_c_fac,2);
 
 % impacts 
-c_init = [8.64, 8.91];    % Cost, Millions USD
-e_init = [28.4, 18.2];    % Embodied energy, TJ
+c_init    = [8.64, 8.91];    % Cost, Millions USD
+e_init    = [28.4, 18.2];    % Embodied energy, TJ
 e_op(1,:) = 606*[1, 1.02, 0.96]; % Operational energy, TJ, theta 0.5, 0, 1
 e_op(2,:) = 597*[1, 1.015, 0.96];  
-Years = 50;           % Building lifetime
-c_energy = 0.0028;    % Energy cost, M$/TJ
-ELMR = 0.56; % Expected lifetime maintenance cost ratio for 50 years
-CV = [NaN; NaN; NaN; 0.05; NaN; 0.05; 0.2]; % assumed coeff. of var.
-n_x = size(CV,1);
+Years     = 50;           % Building lifetime
+c_energy  = 0.0028;    % Energy cost, M$/TJ
+ELMR      = 0.56; % Expected lifetime maintenance cost ratio for 50 years
+CV        = [NaN; NaN; NaN; 0.05; NaN; 0.05; 0.2]; % assumed coeff. of var.
+n_x       = size(CV,1);
 
 % Embodied energy, concrete TJ
 %  foundation 4.98
@@ -285,8 +285,11 @@ for l=1:numStruct
             'sigma',paramNCs(3,k,l));
     end
 end
-%% 6.  Module 2: Collapse sensitivity and EDP/DS distributions
-COMPUTE_CORR = 'disc'; % 'MC' 'load'
+%% 6.  Module 2: Collapse sensitivity and EDP/DS distributions.
+% If the Monte Carlo analysis is to be re-run, the value of
+% COMPUTE_CORR_MC at the top of M2_Sensitivity_Collapse_Limit.m
+% must be changed to true.
+COMPUTE_CORR = 'load'; % 'MC' 'load'
 if strcmp(COMPUTE_CORR,'disc') || strcmp(COMPUTE_CORR,'MC')
     M2_Sensitivity_Collapse_Limit
     save('Data/drift_distributions.mat','f_RD_Sa_DBE','f_RD_Sa_MCE','P_c_fit',...
@@ -294,7 +297,7 @@ if strcmp(COMPUTE_CORR,'disc') || strcmp(COMPUTE_CORR,'MC')
 else
     if strcmp(COMPUTE_CORR,'load')
         load('Data/drift_distributions.mat')
-        load('Data/drift_collapse_corr_v3.mat')
+        load('Data/drift_collapse_corr_disc.mat') % MC version also provided
     else
        error('Must compute correlations through Monte Carlo, discretized values, or load'); 
     end
@@ -385,7 +388,7 @@ for m = 1:numPPeVal
         end
     end
 end
-% Hard-code tough cases
+% Hard-code tough cases for HL-RF settings to be used in FORM.
 x0(1:3,2,1,:) = [0.0112;0.0141;0.0439]*ones(1,numPPeVal);
 x0(1:3,4,1,:) = [0.0176; 0.0238; 0.0908]*ones(1,numPPeVal); 
 x0(1:3,1,2,:) = [0.0102;0.0177;0.043485]*ones(1,numPPeVal);

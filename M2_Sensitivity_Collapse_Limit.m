@@ -3,16 +3,17 @@
 
 close all
 clc
-
+COMPUTE_CORR_MC = false % Run Monte Carlo simulations as proof of concept for
+                        % correlation between limit states. Very high expense.
 %% Run main analysis
-Sas_CS         = zeros(numGM,numStruct);
-EDPs_CS        = zeros(numGM,numCase,numStruct);
-pd_Cs_CS       = cell(numCase,numStruct,numFac);
-paramNCs_CS    = zeros(3,numCase,numStruct,numFac);
-fragSs_CS      = zeros(numSa,numDS,numCase,numStruct,numFac);
-DamageProbs_CS = zeros(numSa,numDS+1,numCase,numStruct,numFac);
-EL_PPs_CS      = zeros(numPPval,numPP,numStruct,numFac);
-EL_PPs_cases_CS= zeros(numCase,numStruct,numFac);
+Sas_CS          = zeros(numGM,numStruct);
+EDPs_CS         = zeros(numGM,numCase,numStruct);
+pd_Cs_CS        = cell(numCase,numStruct,numFac);
+paramNCs_CS     = zeros(3,numCase,numStruct,numFac);
+fragSs_CS       = zeros(numSa,numDS,numCase,numStruct,numFac);
+DamageProbs_CS  = zeros(numSa,numDS+1,numCase,numStruct,numFac);
+EL_PPs_CS       = zeros(numPPval,numPP,numStruct,numFac);
+EL_PPs_cases_CS = zeros(numCase,numStruct,numFac);
 disp('Performing PBEE assessment for all configurations of structure conditional on collapse drift limit:');
 for l = 1:numStruct
     struc = strucs{l};
@@ -30,11 +31,6 @@ for l = 1:numStruct
             hazardInfo, SaCalc, EDP, Sa, DSS(l,:),...
             DSNS(l,:), Repair_cost_S, Repair_cost_NS,...
             Repair_cost_C, T1(l), Years);
-%         [Sas_CS(:,l), EDPs_CS(:,:,l),pd, ...
-%             paramNCs_CS(:,:,l,m), fragSs_CS(:,:,:,l,m),DamageProbs_CS(:,:,:,l,m), ...
-%             SaCalc, EL_PPs_CS(:,:,l,m), EL_PPs_cases_CS(:,l,m)] = ...
-%                 M2_PBEE_Simple(struc, RD_c, ... 
-%                 hazname, EDPname, IMname, Years);
          pd_Cs_CS(:,l,m) = pd;
     end
 end
@@ -184,16 +180,16 @@ if COMPUTE_CORR_MC
         end
         sgtitle(['Case ' num2str(k)]);
         if SAVE_FIG==true
-            savefig([pwd,'/Figs/fig/Drift_Collapse_corr_',num2str(k),'v2.fig']);
+            savefig([pwd,'/Figs/fig/Drift_Collapse_corr_',num2str(k),'MC.fig']);
         end
-        print('-depsc', [pwd '/Figs/eps/Drift_Collapse_corr_',num2str(k),'v2.eps']);
+        print('-depsc', [pwd '/Figs/eps/Drift_Collapse_corr_',num2str(k),'MC.eps']);
     end
     for l=1:numStruct
         r_x2_x3(:,l) = round(rho_x2_x3(:,l),1);
         r_x2_x3(isnan(r_x2_x3(:,l)),l) = 0;
         r_x1_x3(1:numCase,l) = 0;
     end
-    save('Data/drift_collapse_corr_v2.mat','rho_x2_x3', 'r_x2_x3', 'r_x1_x3') 
+    save('Data/drift_collapse_corr_MC.mat','rho_x2_x3', 'r_x2_x3', 'r_x1_x3') 
 else
     for l=1:numStruct
         disp(strucs{l})
@@ -206,7 +202,7 @@ else
         r_x2_x3(:,l) = round(rho_x2_x3(:,l),1);
         r_x1_x3(:,l) = 0;
     end
-save('Data/drift_collapse_corr_v3.mat','rho_x2_x3', 'r_x2_x3', 'r_x1_x3') 
+save('Data/drift_collapse_corr_disc.mat','rho_x2_x3', 'r_x2_x3', 'r_x1_x3') 
 end
 %% Smoothed collapse conditional distributions
 l = 1; 
